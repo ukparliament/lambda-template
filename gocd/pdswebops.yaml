@@ -1,0 +1,33 @@
+pipelines:
+  lambda-template:
+    group: webops
+    label_template: "${COUNT}"
+    materials:
+      lambda-template-git:
+        git: git@github.com:ukparliament/lambda-template.git
+        branch: master
+        auto_update: true
+    stages:
+      - test:
+          jobs:
+            build:
+              tasks:
+                - exec:
+                    run_if: passed
+                    command: make
+                    arguments:
+                      - test
+      - deploy:
+          jobs:
+            deploy:
+              tasks:
+                - exec:
+                    run_if: passed
+                    command: make
+                    arguments:
+                      - deploy
+
+environments:
+  Web.DEVCI:
+    pipelines:
+      - lambda-template

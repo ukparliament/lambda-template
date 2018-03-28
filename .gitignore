@@ -99,3 +99,16 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# PyTest
+
+.pytest_cache
+
+# ====== #
+
+# Serverless directory
+src/.serverless
+
+# Node.js stuff used for build
+node_modules
+package-lock.json
