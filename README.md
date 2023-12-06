@@ -55,3 +55,12 @@ modules and packages in your own code into your tests.
 
 DO NOT add an `__init__.py` file to the `src` directory or your unit tests may
 break.
+
+---
+
+## Ian additions
+
+```
+python3 -m pip install --user virtualenv
+sudo apt install python3-virtualenv
+```

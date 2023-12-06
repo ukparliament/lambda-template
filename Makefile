@@ -8,7 +8,7 @@ CREDSTASH_KEY = $(shell \
 	jq -r '.KeyMetadata.Arn' \
 )
 
-.venv:
+venv:
 	virtualenv -p python3 .venv
 	.venv/bin/pip install -r ./src/requirements.txt
 
