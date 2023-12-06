@@ -1,4 +1,4 @@
-from main import handler
+from hello_world_function import handler
 
 event = {
   "key1": "value1",

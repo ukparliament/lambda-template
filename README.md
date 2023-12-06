@@ -64,3 +64,15 @@ break.
 python3 -m pip install --user virtualenv
 sudo apt install python3-virtualenv
 ```
+
+---
+
+## Infrasctructure as Code (IaC)
+
+This project uses Terraform to manage the cloud infrastructure (both the AWS resources and the CI/CD system).
+
+```
+cd terraform/projects/dev/main.tf
+terraform init
+terraform apply
+```
