@@ -41,9 +41,5 @@ src/test-requirements.txt: .venv
 test: src/test-requirements.txt
 	bash -c "source .venv/bin/activate && cd src && pytest tests"
 
-env:
-	. ./env.sh
-
 get_top_news_local:
-	make env
-	python3 src/get_top_news_local.py
+	. ./env.sh && python3 src/get_top_news_local.py
