@@ -151,4 +151,6 @@ override.tf.json
 .terraformrc
 terraform.rc
 
+# Project-specific
 **/builds/*
+env.sh
