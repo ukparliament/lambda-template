@@ -76,3 +76,5 @@ cd terraform/projects/dev/main.tf
 terraform init
 terraform apply
 ```
+
+git remote set-url origin https://github.com/ikenley/lambda-python-template.git/main
