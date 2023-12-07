@@ -97,38 +97,38 @@ module "hello_world_lambda" {
 #   policy_arn = aws_iam_policy.revisit_prediction.arn
 # }
 
-# module "revisit_prediction_eventbridge" {
-#   source  = "terraform-aws-modules/eventbridge/aws"
-#   version = "1.4.0"
+module "hello_world_events" {
+  source  = "terraform-aws-modules/eventbridge/aws"
+  version = "1.4.0"
 
-#   #bus_name = "${var.namespace}-bus"
-#   create_bus = false
+  #bus_name = "${var.namespace}-bus"
+  create_bus = false
 
-#   rules = {
-#     predictions = {
-#       name                = local.revisit_prediction_id
-#       description         = "Check predictions once daily"
-#       schedule_expression = "cron(0 10 ? * * *)"
-#       enabled             = true
-#     }
-#   }
+  rules = {
+    hello_world_lambda = {
+      name                = local.hello_world_id
+      description         = "Check predictions once daily"
+      schedule_expression = "cron(0 5 7 * ? *)"
+      enabled             = true
+    }
+  }
 
-#   targets = {
-#     predictions = [
-#       {
-#         name = local.revisit_prediction_id
-#         arn  = module.revisit_prediction_lambda.lambda_function_arn
-#       }
-#     ]
-#   }
+  targets = {
+    hello_world_lambda = [
+      {
+        name = local.hello_world_id
+        arn  = module.hello_world_lambda.lambda_function_arn
+      }
+    ]
+  }
 
-#   tags = var.tags
-# }
+  tags = var.tags
+}
 
-# resource "aws_lambda_permission" "allow_revisit_prediction_eventbridge" {
-#   statement_id  = "AllowExecutionFromCloudWatch"
-#   action        = "lambda:InvokeFunction"
-#   function_name = module.revisit_prediction_lambda.lambda_function_name
-#   principal     = "events.amazonaws.com"
-#   source_arn    = module.revisit_prediction_eventbridge.eventbridge_rule_arns["predictions"]
-# }
+resource "aws_lambda_permission" "hello_world_lambda" {
+  statement_id  = "AllowExecutionFromCloudWatch"
+  action        = "lambda:InvokeFunction"
+  function_name = module.hello_world_lambda.lambda_function_name
+  principal     = "events.amazonaws.com"
+  source_arn    = module.hello_world_events.eventbridge_rule_arns["hello_world_lambda"]
+}
