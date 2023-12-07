@@ -1,15 +1,11 @@
+locals {
+  core_output_prefix = "/${var.namespace}/${var.env}/core"
+}
 
-# locals {
-#   pghost = data.aws_ssm_parameter.db_instance_address.value
-#   pgport = data.aws_ssm_parameter.db_instance_port.value
-#   pgdatabase = data.aws_ssm_parameter.db_database_name.value
-# }
-# data "aws_ssm_parameter" "db_instance_address" {
-#   name  = "${var.rds_output_prefix}/db_instance_address"
-# }
-# data "aws_ssm_parameter" "db_instance_port" {
-#   name  = "${var.rds_output_prefix}/db_instance_port"
-# }
-# data "aws_ssm_parameter" "db_database_name" {
-#   name  = "${var.rds_output_prefix}/db_database_name"
-# }
+# Core management
+data "aws_ssm_parameter" "event_bus_arn" {
+  name  = "${local.core_output_prefix}/event_bus_arn"
+}
+data "aws_ssm_parameter" "event_bus_name" {
+  name  = "${local.core_output_prefix}/event_bus_name"
+}

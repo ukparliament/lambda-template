@@ -97,32 +97,19 @@ module "hello_world_lambda" {
 #   policy_arn = aws_iam_policy.revisit_prediction.arn
 # }
 
-module "hello_world_events" {
-  source  = "terraform-aws-modules/eventbridge/aws"
-  version = "1.4.0"
+resource "aws_cloudwatch_event_rule" "hello_world" {
+  name        = local.hello_world_id
+  description = "Basic Hello World lambda function"
 
-  #bus_name = "${var.namespace}-bus"
-  create_bus = false
+  schedule_expression = "cron(0 5 7 * ? *)"
 
-  rules = {
-    hello_world_lambda = {
-      name                = local.hello_world_id
-      description         = "Check predictions once daily"
-      schedule_expression = "cron(0 5 7 * ? *)"
-      enabled             = true
-    }
-  }
+  tags = local.tags
+}
 
-  targets = {
-    hello_world_lambda = [
-      {
-        name = local.hello_world_id
-        arn  = module.hello_world_lambda.lambda_function_arn
-      }
-    ]
-  }
-
-  tags = var.tags
+resource "aws_cloudwatch_event_target" "hello_world" {
+  target_id = "Yada"
+  rule      = aws_cloudwatch_event_rule.hello_world.name
+  arn       = module.hello_world_lambda.lambda_function_arn
 }
 
 resource "aws_lambda_permission" "hello_world_lambda" {
@@ -130,5 +117,5 @@ resource "aws_lambda_permission" "hello_world_lambda" {
   action        = "lambda:InvokeFunction"
   function_name = module.hello_world_lambda.lambda_function_name
   principal     = "events.amazonaws.com"
-  source_arn    = module.hello_world_events.eventbridge_rule_arns["hello_world_lambda"]
+  source_arn    = aws_cloudwatch_event_rule.hello_world.arn
 }
