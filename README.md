@@ -79,3 +79,18 @@ cd terraform/projects/dev/main.tf
 terraform init
 terraform apply
 ```
+
+---
+
+## Ad hoc scripting
+
+```
+aws s3api list-objects --bucket my-data-lake --prefix "news/nytimes/mostpopular/emailed/1/2023"
+```
+
+---
+
+## TODO
+
+- revisit_news_function
+  - https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/list_objects_v2.html

@@ -43,3 +43,6 @@ test: src/test-requirements.txt
 
 get_top_news_local:
 	. ./env.sh && python3 src/get_top_news_local.py
+
+revisit_news_local:
+	. ./env.sh && python3 src/revisit_news_local.py
