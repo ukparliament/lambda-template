@@ -19,6 +19,7 @@ eventbridge_client = boto3.client("events")
 s3_client = boto3.client("s3")
 
 API_KEY = os.environ["API_KEY"]
+EVENT_BUS_NAME = os.environ["EVENT_BUS_NAME"]
 SITE_URL = (
     f"https://api.nytimes.com/svc/mostpopular/v2/emailed/1.json?api-key={API_KEY}"
 )
@@ -32,7 +33,7 @@ def handler(event, context):
     file_path = write_results_to_file(news_results, formatted_date)
     s3_key = copy_file_to_s3(file_path)
     send_event(s3_key, formatted_date)
-    return news_results
+    return "Success"
 
 
 def get_top_news():
@@ -77,6 +78,7 @@ def copy_file_to_s3(file_path):
 
 def send_event(s3_key, formatted_date):
     event = {
+        "EventBusName": EVENT_BUS_NAME,
         "Source": "lambdapythontemplate.gettopnewsfunction",
         "DetailType": "get_top_news_success",
         "Detail": json.dumps(

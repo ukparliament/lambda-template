@@ -5,6 +5,7 @@
 locals {
   get_top_news_id = "${local.id}-get-top-news"
   get_top_news_desc = "Fetches trending news stories and writes a record to S3"
+  top_news_event_source = "lambdapythontemplate.gettopnewsfunction"
 }
 
 # ------------------------------------------------------------------------------
@@ -30,6 +31,7 @@ module "get_top_news_lambda" {
   environment_variables = {
     Serverless = "Terraform"
     API_KEY = var.news_api_key
+    EVENT_BUS_NAME = data.aws_ssm_parameter.event_bus_name.value
     S3_BUCKET_NAME = data.aws_ssm_parameter.data_lake_s3_bucket_name.value
   }
 
@@ -53,6 +55,17 @@ resource "aws_iam_policy" "get_top_news" {
         "Effect" : "Allow",
         "Action" : "s3:PutObject",
         "Resource" : ["${data.aws_ssm_parameter.data_lake_s3_bucket_arn.value}/news/*"]
+      },
+      {
+        "Sid" : "PutEvents",
+        "Effect" : "Allow",
+        "Action" : "events:PutEvents",
+        "Resource" : [data.aws_ssm_parameter.event_bus_arn.value],
+        "Condition": {
+          "StringEqualsIfExists": {
+            "events:source": local.top_news_event_source
+          }
+        }
       },
     ]
   })
