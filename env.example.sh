@@ -1,2 +1,5 @@
 export API_KEY="TODO"
+export EVENT_BUS_NAME="TODO"
 export S3_BUCKET_NAME="TODO"
+export SES_FROM_EMAIL_ADDRESS="TODO"
+export TO_EMAIL_ADDRESSES_PARAM_NAME="/my/param/todo"
