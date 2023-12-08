@@ -89,8 +89,3 @@ aws s3api list-objects --bucket my-data-lake --prefix "news/nytimes/mostpopular/
 ```
 
 ---
-
-## TODO
-
-- revisit_news_function
-  - https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/list_objects_v2.html
