@@ -27,3 +27,8 @@ variable "is_prod" {
 # SES
 # variable "ses_email_address" {}
 # variable "ses_email_arn" {}
+
+variable "news_api_key" {
+  description = "API key for news service"
+  sensitive = true
+}

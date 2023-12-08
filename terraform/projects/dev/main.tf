@@ -34,4 +34,6 @@ module "main" {
   # git_repo   = "ikenley/ai-app"
   # git_branch = "image" #"main"
 
+  news_api_key = var.news_api_key
+
 }
